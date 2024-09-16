@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+        }
+        /* 页面容器样式 */
+        .page {
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            overflow: hidden;
+        }
+        /* 背景图片样式 */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+        /* 主文本框样式 */
+        .marvel-text-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+        .marvel-text {
+            display: inline-block;
+            font-size: 8vw;
+            font-weight: bold;
+            color: rgb(244, 242, 242);
+            text-transform: uppercase;
+            overflow: hidden;
+            white-space: nowrap;
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+        .marvel-text.show {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+        /* 小文本框样式 */
+        .small-text {
+            font-size: 2em;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 5px;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        /* 页面过渡效果 */
+        .page:not(.active) {
+            transform: translateY(100%);
+            opacity: 0;
+            transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+        }
+        .page.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 第一页 -->
+<div class="page active" id="page1">
+    <div class="background" style="background-image: url('path_to_your_first_image.jpg');"></div>
+    <div class="marvel-text-container">
+        <div class="marvel-text" id="marvelText">
+            <span style="color: rgb(255, 255, 255);">Test</span>
+        </div>
+    </div>
+    <div class="small-text">
+        Explore the city like never before!
+    </div>
+    <div class="background"></div>
+<div class="background" style="background-image: url('b.jpg');"></div>
+</div>
+<!-- 添加一个向下箭头提示用户滚动 -->
+<style>
+    .page {
+        transition: opacity 1s ease-in-out;
+    }
+</style>
+<div class="scroll-down-indicator">
+    <span>↓</span>
+</div>
+
+<style>
+    .scroll-down-indicator {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2em;
+        color: white;
+        animation: bounce 2s infinite;
+        z-index: 10;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+        }
+        40% {
+            transform: translateY(-10px);
+        }
+        60% {
+            transform: translateY(-5px);
+        }
+    }
+</style>
+<!-- 第二页 -->
+<div class="page" id="page2">
+    <div class="background" style="background-image: url('a.jpg');"></div>
+</div>
+
+<script>
+    // 滚动事件监听
+    window.addEventListener("scroll", function() {
+        if (window.scrollY > window.innerHeight / 2) {
+            document.getElementById("page1").classList.remove("active");
+            document.getElementById("page2").classList.add("active");
+        } else {
+            document.getElementById("page1").classList.add("active");
+            document.getElementById("page2").classList.remove("active");
+        }
+    });
+
+    // 模拟文本框出现
+    window.addEventListener("load", function() {
+        const marvelText = document.getElementById("marvelText");
+        setTimeout(() => {
+            marvelText.classList.add("show");
+        }, 500); // 延迟500毫秒后显示
+    });
+</script>
+
+</body>
+</html>
+
